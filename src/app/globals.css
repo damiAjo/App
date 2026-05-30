@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Primary: Lime Green #88d42b + Complementary Purple */
+  /* ── Brand Colors ─────────────────────────────────────────── */
+  --lime:           #88d42b;
+  --lime-light:     #a8e63d;
+  --purple-deep:    #12052a;
+  --purple-mid:     #5b1d9e;
+  --purple-vivid:   #7c3aed;
+  --purple-light:   #c084fc;
+
+  /* ── Semantic Tokens ──────────────────────────────────────── */
+  --bg-primary:     transparent;          /* Body gradient shows through */
+  --bg-base:        #0d0520;              /* Deepest background fallback  */
+  --bg-secondary:   rgba(255,255,255,0.06);
+  --bg-tertiary:    rgba(255,255,255,0.04);
+  --border-color:   rgba(255,255,255,0.10);
+  --text-primary:   #f0fdf4;
+  --text-secondary: #a7f3d0;
+  --accent-primary:   var(--purple-vivid);
+  --accent-secondary: var(--lime);
+  --accent-gradient: linear-gradient(135deg, #5b1d9e 0%, #7c3aed 45%, #88d42b 100%);
+  --success: #4ade80;
+  --warning: #f59e0b;
+  --danger:  #ef4444;
+  --shadow:  0 8px 32px 0 rgba(91, 29, 158, 0.35);
+  --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  --focus-ring:   3px solid var(--lime);
+
+  /* ── Aurora Mesh Gradient (default dark) ─────────────────── */
+  /*    Five radial blobs over a deep purple-black base          */
+  --bg-gradient:
+    radial-gradient(ellipse 70% 55% at 8%  25%, rgba(91,  29, 158, 0.60) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 50% at 92% 8%,  rgba(136,212, 43,  0.28) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 60% at 78% 82%, rgba(124, 58, 237, 0.45) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 45% at 22% 88%, rgba(136,212, 43,  0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 55% 45%, rgba(192,132, 252, 0.18) 0%, transparent 50%),
+    linear-gradient(160deg, #0d0520 0%, #1a0a2e 28%, #0b1a04 58%, #0d0520 100%);
+}
+
+/* ── Light Theme ──────────────────────────────────────────────── */
+.theme-light {
+  --bg-secondary:   rgba(255,255,255,0.55);
+  --bg-tertiary:    rgba(255,255,255,0.35);
+  --border-color:   rgba(91, 29, 158, 0.15);
+  --text-primary:   #1a0533;
+  --text-secondary: #4a1487;
+  --accent-primary:   #7c3aed;
+  --accent-secondary: #88d42b;
+  --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #c084fc 60%, #88d42b 100%);
+  --shadow: 0 8px 32px 0 rgba(124, 58, 237, 0.18);
+  --focus-ring: 3px solid #7c3aed;
+
+  --bg-gradient:
+    radial-gradient(ellipse 65% 55% at 8%  20%, rgba(168,230, 61,  0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 50% at 90% 10%, rgba(124, 58, 237, 0.30) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 55% at 75% 85%, rgba(192,132, 252, 0.40) 0%, transparent 58%),
+    radial-gradient(ellipse 40% 40% at 20% 85%, rgba(136,212, 43,  0.25) 0%, transparent 50%),
+    radial-gradient(ellipse 35% 35% at 52% 48%, rgba(124, 58, 237, 0.15) 0%, transparent 48%),
+    linear-gradient(155deg, #f0fff4 0%, #e9d5ff 35%, #d9f99d 65%, #f5f3ff 100%);
+}
+
+/* ── High Contrast Theme (WCAG AAA) ──────────────────────────── */
+.theme-high-contrast {
+  --bg-primary:     #000000;
+  --bg-base:        #000000;
+  --bg-secondary:   #000000;
+  --bg-tertiary:    #111111;
+  --border-color:   #ffffff;
+  --text-primary:   #ffffff;
+  --text-secondary: #ffffff;
+  --accent-primary:   #ffff00;
+  --accent-secondary: #00ffff;
+  --accent-gradient: none;
+  --success:  #00ff00;
+  --warning:  #ffff00;
+  --danger:   #ff0000;
+  --shadow:   none;
+  --focus-ring: 3px solid #ffff00;
+  --bg-gradient: #000000;
+}
+
+/* ────────────────────────────────────────────────────────────── */
+*  {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+html {
+  height: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* ── The professional multi-layer gradient ── */
+  background: var(--bg-gradient);
+  background-attachment: fixed;   /* Parallax feel while scrolling */
+  background-color: var(--bg-base);
+}
+
+/* Scrollbar track should be semi-transparent so gradient shows */
+::-webkit-scrollbar-track {
+  background: rgba(13, 5, 32, 0.6);
+}
+
+/* ── Accessible focus outline ────────────────────────────────── */
+body.user-is-tabbing *:focus {
+  outline: var(--focus-ring) !important;
+  outline-offset: 2px !important;
+}
+
+/* ── Glassmorphism Panels ─────────────────────────────────────
+   True frosted-glass: semi-transparent + backdrop-blur so the
+   aurora gradient beneath glows through the panel edges.        */
+.glass-panel {
+  background: var(--bg-secondary);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.glass-card {
+  background: var(--bg-tertiary);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(91, 29, 158, 0.35);
+}
+
+.theme-high-contrast .glass-panel,
+.theme-high-contrast .glass-card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: #000;
+  border: 2px solid #fff;
+}
+
+.theme-high-contrast .glass-card:hover {
+  transform: none;
+  border-width: 3px;
+}
+
+/* ── Text Gradients ──────────────────────────────────────────── */
+.text-gradient {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.theme-high-contrast .text-gradient {
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+  color: var(--accent-primary);
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(124, 58, 237, 0.45);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* ── Interactive elements ────────────────────────────────────── */
+button, a {
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+/* ── Keyframe Animations ─────────────────────────────────────── */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1;   }
+}
+
+@keyframes slideInUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes meshFloat {
+  0%, 100% { background-position: 0% 50%;   }
+  50%       { background-position: 100% 50%; }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── High Contrast media query ───────────────────────────────── */
+@media (forced-colors: active) {
+  * { forced-color-adjust: auto; }
+}
