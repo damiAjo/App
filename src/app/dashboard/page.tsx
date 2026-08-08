@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useAccessibility, AccessTheme, FontSizeLevel } from '@/context/AccessibilityContext';
+import { Accessibility, AudioLines, Captions, Contrast, Hand, Home, MessageCircle, Video } from 'lucide-react';
+import { useAccessibility, AccessTheme, FontSizeLevel } from '@/lib/accessibility/AccessibilityContext';
 import {
   LiveCaptioning,
   LiveCaptionDisplay,
@@ -12,7 +13,9 @@ import {
   EmergencyNotifications,
   AccessibleVideoOverlay,
 } from '@/components/ai';
-import { CaptionSettings, DEFAULT_CAPTION_SETTINGS } from '@/services/captionSettings';
+import { CaptionSettings, DEFAULT_CAPTION_SETTINGS } from '@/lib/captions/captionSettings';
+import { SiteFooter } from '@/components/layout';
+import { MotionPreferenceControl } from '@/components/motion';
 
 export default function Dashboard() {
   const { theme, setTheme, fontSizeMultiplier, setFontSizeMultiplier, toggleHighContrast, highContrast } = useAccessibility();
@@ -47,7 +50,8 @@ export default function Dashboard() {
       >
         <div>
           <h1 style={{ fontSize: '2rem', fontWeight: '800', fontFamily: 'var(--font-heading)', margin: 0, letterSpacing: '-0.5px' }}>
-            ♿ Access<span style={{ color: 'var(--accent-secondary)' }}>AI</span> Dashboard
+            <Accessibility size={30} aria-hidden="true" style={{ verticalAlign: 'text-bottom', marginRight: '0.5rem' }} />
+            Access<span style={{ color: 'var(--accent-secondary)' }}>AI</span> Dashboard
           </h1>
           <p style={{ margin: '0.25rem 0 0 0', color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
             Accessible AI-Powered Workspace for Deaf & Hard of Hearing Individuals
@@ -56,6 +60,7 @@ export default function Dashboard() {
 
         {/* Accessibility Panel inside Header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <MotionPreferenceControl compact />
           
           {/* Theme Selector */}
           <div style={{ display: 'flex', gap: '0.25rem', background: 'var(--bg-tertiary)', padding: '4px', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
@@ -77,7 +82,7 @@ export default function Dashboard() {
                 }}
                 aria-label={`Switch theme color to ${t}`}
               >
-                {t === 'high-contrast' ? '♿ Contrast' : t}
+                {t === 'high-contrast' ? <><Contrast size={14} aria-hidden="true" /> Contrast</> : t}
               </button>
             ))}
           </div>
@@ -122,11 +127,11 @@ export default function Dashboard() {
         aria-label="Dashboard Workspace panels"
       >
         {[
-          { id: 'overview', label: '🏠 Overview', desc: 'Summary of tools' },
-          { id: 'captioning', label: '🎙️ Live Captions', desc: 'Voice recognition' },
-          { id: 'chat', label: '💬 AI Translation', desc: 'Chat & ASL Gestures' },
-          { id: 'video', label: '📹 Meeting Overlay', desc: 'Conference mockup' },
-          { id: 'alerts', label: '🚨 Safety Hub', desc: 'Environmental sound alerts' },
+          { id: 'overview', label: 'Overview', icon: Home, desc: 'Summary of tools' },
+          { id: 'captioning', label: 'Live Captions', icon: Captions, desc: 'Voice recognition' },
+          { id: 'chat', label: 'AI Translation', icon: MessageCircle, desc: 'Chat & ASL Gestures' },
+          { id: 'video', label: 'Meeting Overlay', icon: Video, desc: 'Conference mockup' },
+          { id: 'alerts', label: 'Safety Hub', icon: AudioLines, desc: 'Environmental sound alerts' },
         ].map((tab) => (
           <button
             key={tab.id}
@@ -147,7 +152,7 @@ export default function Dashboard() {
             }}
             aria-label={`${tab.label} - ${tab.desc}`}
           >
-            {tab.label}
+            <tab.icon size={18} strokeWidth={2} aria-hidden="true" /> {tab.label}
           </button>
         ))}
       </nav>
@@ -170,10 +175,10 @@ export default function Dashboard() {
               }}
             >
               {[
-                { title: '🎙️ Live Speech Captioning', desc: 'Leverage Web Speech recognition to transcribe microphone signals instantly with customizable sizes.', id: 'captioning' },
-                { title: '🤟 Sign Translation Partner', desc: 'Dictate sentences or type texts to generate responsive gestural sequences in real-time.', id: 'chat' },
-                { title: '💬 AI Conversational Chat', desc: 'Interact with our inclusive model using preset chips or dictation inputs.', id: 'chat' },
-                { title: '🚨 Audio & Sound Monitoring', desc: 'Web Audio decibel analyzer dynamically alerts you to alarms, doorbell rings, door knockings, and sirens.', id: 'alerts' },
+                { title: 'Live Speech Captioning', icon: Captions, desc: 'Leverage Web Speech recognition to transcribe microphone signals instantly with customizable sizes.', id: 'captioning' },
+                { title: 'Sign Translation Partner', icon: Hand, desc: 'Dictate sentences or type texts to generate responsive gestural sequences in real-time.', id: 'chat' },
+                { title: 'AI Conversational Chat', icon: MessageCircle, desc: 'Interact with our inclusive model using preset chips or dictation inputs.', id: 'chat' },
+                { title: 'Audio & Sound Monitoring', icon: AudioLines, desc: 'Web Audio decibel analyzer dynamically alerts you to alarms, doorbell rings, door knockings, and sirens.', id: 'alerts' },
               ].map((feat, i) => (
                 <button
                   key={i}
@@ -194,6 +199,7 @@ export default function Dashboard() {
                   aria-label={`Jump to feature page ${feat.title}`}
                 >
                   <div>
+                    <div className="icon-badge" style={{ marginBottom: '1rem' }}><feat.icon size={22} aria-hidden="true" /></div>
                     <h3 style={{ fontWeight: 'bold', fontSize: '1.15rem', marginBottom: '0.5rem', color: 'var(--text-primary)' }}>{feat.title}</h3>
                     <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.5' }}>
                       {feat.desc}
@@ -247,25 +253,7 @@ export default function Dashboard() {
         )}
       </main>
 
-      {/* Footer Info */}
-      <footer
-        className="glass-panel animate-slide-up"
-        style={{
-          marginTop: '4rem',
-          padding: '1.5rem 2rem',
-          textAlign: 'center',
-          fontSize: '0.9rem',
-          color: 'var(--text-secondary)',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '1rem',
-        }}
-      >
-        <span>AccessAI © 2026. Made with ❤️ for Inclusive Communities.</span>
-        <span style={{ fontWeight: '700', color: 'var(--accent-secondary)' }}>♿ WCAG 2.1 AA & AAA Compliant System</span>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Bell, Hand, Siren } from 'lucide-react';
 
 // SVG Illustration: Person using captions
 export const CaptioningIllustration: React.FC = () => (
@@ -98,12 +99,12 @@ export const SoundDetectionIllustration: React.FC = () => (
     {/* Sound waves - doorbell */}
     <circle cx="55" cy="50" r="3" fill="none" stroke="#ff9800" strokeWidth="2" />
     <circle cx="55" cy="50" r="8" fill="none" stroke="#ff9800" strokeWidth="1.5" />
-    <text x="55" y="75" textAnchor="middle" fontSize="20">🔔</text>
+    <Bell x={43} y={63} width={24} height={24} color="var(--accent-secondary)" aria-hidden="true" />
     
     {/* Sound waves - siren */}
     <circle cx="145" cy="50" r="3" fill="none" stroke="#f44336" strokeWidth="2" />
     <circle cx="145" cy="50" r="8" fill="none" stroke="#f44336" strokeWidth="1.5" />
-    <text x="145" y="75" textAnchor="middle" fontSize="20">🚨</text>
+    <Siren x={133} y={63} width={24} height={24} color="var(--danger)" aria-hidden="true" />
     
     {/* Alert indicator */}
     <rect x="45" y="165" width="110" height="20" fill="#ff9800" rx="3" />
@@ -149,7 +150,7 @@ export const SignLanguageIllustration: React.FC = () => (
     <path d="M 150 65 Q 155 60 150 55" stroke="#9c27b0" strokeWidth="2" fill="none" strokeDasharray="3" />
     
     {/* Hand symbol */}
-    <text x="100" y="175" textAnchor="middle" fontSize="24">🤟</text>
+    <Hand x={87} y={161} width={26} height={26} color="var(--accent-secondary)" aria-hidden="true" />
   </svg>
 );
 

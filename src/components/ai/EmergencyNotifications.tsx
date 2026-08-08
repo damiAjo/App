@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
+import type { LucideIcon } from 'lucide-react';
+import { AlertTriangle, History, Megaphone, Siren } from 'lucide-react';
 
 interface EmergencyNotification {
   id: string;
@@ -8,7 +10,7 @@ interface EmergencyNotification {
   title: string;
   message: string;
   timestamp: Date;
-  icon: string;
+  icon: LucideIcon;
 }
 
 interface EmergencyNotificationsProps {
@@ -25,7 +27,7 @@ export const EmergencyNotifications: React.FC<EmergencyNotificationsProps> = ({
     type: 'alert' | 'warning' | 'critical',
     title: string,
     message: string,
-    icon: string
+    icon: LucideIcon
   ) => {
     const notification: EmergencyNotification = {
       id: Date.now().toString(),
@@ -70,7 +72,7 @@ export const EmergencyNotifications: React.FC<EmergencyNotificationsProps> = ({
 
       <div style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
         <button
-          onClick={() => addNotification('alert', 'Event Alert', 'Important event detected', '📢')}
+          onClick={() => addNotification('alert', 'Event Alert', 'Important event detected', Megaphone)}
           aria-label="Send alert notification"
           style={{
             padding: '0.75rem 1rem',
@@ -81,10 +83,10 @@ export const EmergencyNotifications: React.FC<EmergencyNotificationsProps> = ({
             cursor: 'pointer',
           }}
         >
-          Alert
+          <Megaphone size={17} aria-hidden="true" /> Alert
         </button>
         <button
-          onClick={() => addNotification('warning', 'Warning', 'Warning condition detected', '⚠️')}
+          onClick={() => addNotification('warning', 'Warning', 'Warning condition detected', AlertTriangle)}
           aria-label="Send warning notification"
           style={{
             padding: '0.75rem 1rem',
@@ -95,10 +97,10 @@ export const EmergencyNotifications: React.FC<EmergencyNotificationsProps> = ({
             cursor: 'pointer',
           }}
         >
-          Warning
+          <AlertTriangle size={17} aria-hidden="true" /> Warning
         </button>
         <button
-          onClick={() => addNotification('critical', 'Critical', 'Critical emergency!', '🚨')}
+          onClick={() => addNotification('critical', 'Critical', 'Critical emergency!', Siren)}
           aria-label="Send critical notification"
           style={{
             padding: '0.75rem 1rem',
@@ -109,7 +111,7 @@ export const EmergencyNotifications: React.FC<EmergencyNotificationsProps> = ({
             cursor: 'pointer',
           }}
         >
-          Critical
+          <Siren size={17} aria-hidden="true" /> Critical
         </button>
         <button
           onClick={() => setShowPanel(!showPanel)}
@@ -124,7 +126,7 @@ export const EmergencyNotifications: React.FC<EmergencyNotificationsProps> = ({
             cursor: 'pointer',
           }}
         >
-          History ({notifications.length})
+          <History size={17} aria-hidden="true" /> History ({notifications.length})
         </button>
       </div>
 
@@ -158,7 +160,7 @@ export const EmergencyNotifications: React.FC<EmergencyNotificationsProps> = ({
                   }}
                   role="alert"
                 >
-                  <span style={{ fontSize: '1.5rem' }}>{notif.icon}</span>
+                  <notif.icon size={24} aria-hidden="true" />
                   <div>
                     <strong>{notif.title}</strong>
                     <p style={{ margin: '0.25rem 0 0 0' }}>{notif.message}</p>

@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { runAccessibilityTests, generateAccessibilityReport } from '@/utils/accessibilityTesting';
+import { AlertTriangle, CheckCircle2, Ear, Keyboard, Microscope, Printer, ScanSearch, ShieldCheck } from 'lucide-react';
+import { runAccessibilityTests, generateAccessibilityReport } from '@/lib/accessibility/testing';
+import { SiteFooter } from '@/components/layout';
 
 export default function AccessibilityTestPage() {
   const [report, setReport] = useState<any>(null);
@@ -66,7 +68,8 @@ export default function AccessibilityTestPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h1 style={{ fontSize: '2.5rem', fontWeight: '800', fontFamily: 'var(--font-heading)' }}>
-              🛡️ Accessibility Auditing Center
+              <ShieldCheck size={38} aria-hidden="true" style={{ verticalAlign: 'text-bottom', marginRight: '0.65rem' }} />
+              Accessibility Auditing Center
             </h1>
             <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginTop: '0.25rem' }}>
               Run automated WCAG 2.1 AA audits using integrated Axe-core scanners.
@@ -107,7 +110,7 @@ export default function AccessibilityTestPage() {
                   boxShadow: '0 4px 12px rgba(124,58,237,0.15)',
                 }}
               >
-                🖨️ Export Certificate
+                <Printer size={18} aria-hidden="true" /> Export Certificate
               </button>
             )}
           </div>
@@ -126,7 +129,7 @@ export default function AccessibilityTestPage() {
               }}
             >
               <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                {axeViolations.length === 0 ? '✅ 100% Compliant Statement' : '⚠️ Corrective Work Required'}
+                {axeViolations.length === 0 ? <><CheckCircle2 size={22} aria-hidden="true" /> 100% Compliant Statement</> : <><AlertTriangle size={22} aria-hidden="true" /> Corrective Work Required</>}
               </h2>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', margin: 0 }}>
                 {axeViolations.length === 0 
@@ -158,7 +161,7 @@ export default function AccessibilityTestPage() {
               {/* Keyboard Nav results */}
               <div className="glass-panel" style={{ padding: '2rem' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', fontFamily: 'var(--font-heading)', marginBottom: '1.25rem' }}>
-                  ⌨️ Heuristic Keyboard Navigation Checks
+                  <Keyboard size={21} aria-hidden="true" /> Heuristic Keyboard Navigation Checks
                 </h3>
                 <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', listStyle: 'none' }}>
                   <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
@@ -179,7 +182,7 @@ export default function AccessibilityTestPage() {
               {/* Screen reader compatibility checks */}
               <div className="glass-panel" style={{ padding: '2rem' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', fontFamily: 'var(--font-heading)', marginBottom: '1.25rem' }}>
-                  👂 Screen Reader Compatibility Checks
+                  <Ear size={21} aria-hidden="true" /> Screen Reader Compatibility Checks
                 </h3>
                 <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', listStyle: 'none' }}>
                   <li style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.5rem' }}>
@@ -205,12 +208,12 @@ export default function AccessibilityTestPage() {
             {/* Real Axe-core Violations Breakdown */}
             <div className="glass-panel" style={{ padding: '2rem' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', fontFamily: 'var(--font-heading)', marginBottom: '1.25rem' }}>
-                🕵️ Axe-core Violations Scanner
+                <Microscope size={21} aria-hidden="true" /> Axe-core Violations Scanner
               </h3>
               
               {axeViolations.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--success)' }}>
-                  <span style={{ fontSize: '3rem', display: 'block', marginBottom: '0.5rem' }}>🛡️</span>
+                  <ShieldCheck size={48} aria-hidden="true" style={{ display: 'block', margin: '0 auto 0.5rem' }} />
                   <span style={{ fontWeight: 'bold' }}>All clear! The Axe-core compiler detected zero accessibility violations on the layout.</span>
                 </div>
               ) : (
@@ -240,7 +243,7 @@ export default function AccessibilityTestPage() {
                       
                       <div style={{ fontSize: '0.8rem', background: 'var(--bg-primary)', padding: '0.75rem', borderRadius: '6px', border: '1px solid var(--border-color)' }}>
                         <strong style={{ color: 'var(--accent-secondary)' }}>Correction steps:</strong> {violation.helpUrl ? (
-                          <a href={violation.helpUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline', color: 'var(--accent-secondary)', marginLeft: '4px' }}>
+                          <a href={violation.helpUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-secondary)', marginLeft: '4px', fontWeight: '700' }}>
                             View Axe Guidance docs
                           </a>
                         ) : 'Check labels and tag association.'}
@@ -255,7 +258,7 @@ export default function AccessibilityTestPage() {
         ) : (
           /* Landing testing screen before audit run */
           <div className="glass-panel animate-slide-up" style={{ padding: '3rem', textAlign: 'center' }}>
-            <span style={{ fontSize: '4rem', display: 'block', marginBottom: '1.5rem' }}>🎯</span>
+            <div className="icon-badge" style={{ width: '4rem', height: '4rem', margin: '0 auto 1.5rem' }}><ScanSearch size={32} aria-hidden="true" /></div>
             <h2 style={{ fontSize: '1.8rem', fontWeight: 'bold', fontFamily: 'var(--font-heading)', marginBottom: '0.75rem' }}>
               Automated Compliance Scans
             </h2>
@@ -282,6 +285,7 @@ export default function AccessibilityTestPage() {
         )}
 
       </div>
+      <SiteFooter />
     </div>
   );
 }

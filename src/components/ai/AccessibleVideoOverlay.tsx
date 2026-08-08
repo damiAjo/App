@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
+import { Hand, Keyboard, Mic2, UserRound, Video } from 'lucide-react';
 
 interface AccessibleVideoOverlayProps {
   onCaptionToggle?: (enabled: boolean) => void;
@@ -118,7 +119,7 @@ export const AccessibleVideoOverlay: React.FC<AccessibleVideoOverlayProps> = ({
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', fontFamily: 'var(--font-heading)' }}>
-            📹 Interactive Video Overlay
+            <Video size={24} aria-hidden="true" style={{ verticalAlign: 'text-bottom', marginRight: '0.5rem' }} /> Interactive Video Overlay
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
             Simulate fully accessible video calls with floating overlays.
@@ -128,7 +129,7 @@ export const AccessibleVideoOverlay: React.FC<AccessibleVideoOverlayProps> = ({
         {/* Keyboard Shortcut Guidelines */}
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           <span style={{ fontSize: '0.75rem', padding: '0.3rem 0.6rem', backgroundColor: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', borderRadius: '6px', fontWeight: '600', color: 'var(--text-secondary)' }}>
-            ⌨️ Hotkeys: [C] Captions
+            <Keyboard size={14} aria-hidden="true" /> Hotkeys: [C] Captions
           </span>
           <span style={{ fontSize: '0.75rem', padding: '0.3rem 0.6rem', backgroundColor: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', borderRadius: '6px', fontWeight: '600', color: 'var(--text-secondary)' }}>
             [S] Sign Window
@@ -160,7 +161,7 @@ export const AccessibleVideoOverlay: React.FC<AccessibleVideoOverlayProps> = ({
           {/* Simulated speaker layout */}
           <div style={{ textAlign: 'center', color: 'var(--text-primary)' }}>
             <div className="animate-pulse-glow" style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--accent-primary)30', border: '2px solid var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5rem', margin: '0 auto 1rem' }}>
-              🎙️
+              <Mic2 size={38} aria-hidden="true" />
             </div>
             <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Presenter: Dr. Marcus Vance</h3>
             <span style={{ fontSize: '0.75rem', color: 'var(--accent-secondary)', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '1px' }}>Primary Presenter</span>
@@ -199,13 +200,13 @@ export const AccessibleVideoOverlay: React.FC<AccessibleVideoOverlayProps> = ({
           
           {/* Remote user 1 */}
           <div style={{ background: '#141620', borderRadius: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-            <span style={{ fontSize: '1.5rem' }}>👩‍💻</span>
+            <UserRound size={26} aria-hidden="true" />
             <span style={{ fontSize: '0.7rem', color: '#fff', position: 'absolute', bottom: '4px', left: '6px', fontWeight: 'bold' }}>Elena (Remote)</span>
           </div>
 
           {/* Remote user 2 */}
           <div style={{ background: '#141620', borderRadius: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-            <span style={{ fontSize: '1.5rem' }}>👨‍💻</span>
+            <UserRound size={26} aria-hidden="true" />
             <span style={{ fontSize: '0.7rem', color: '#fff', position: 'absolute', bottom: '4px', left: '6px', fontWeight: 'bold' }}>Kai (Remote)</span>
           </div>
 
@@ -226,7 +227,7 @@ export const AccessibleVideoOverlay: React.FC<AccessibleVideoOverlayProps> = ({
             role="region"
             aria-label="Sign Language Interpreter stream"
           >
-            <div className="animate-pulse-glow" style={{ fontSize: '1.8rem' }}>🤟</div>
+            <Hand className="animate-pulse-glow" size={29} aria-hidden="true" />
             <span style={{ fontSize: '0.65rem', color: '#00ffff', fontWeight: 'bold', textTransform: 'uppercase', marginTop: '0.25rem' }}>Interpreter</span>
             <span style={{ fontSize: '0.6rem', color: '#fff', position: 'absolute', bottom: '4px', left: '6px', fontWeight: '600' }}>Live ASL Feed</span>
           </div>

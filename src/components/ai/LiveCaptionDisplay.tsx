@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { CaptionSettings } from '../../services/captionSettings';
+import { CaptionSettings } from '@/lib/captions/captionSettings';
+import { emitCommunicationSignal } from '@/lib/signals/communicationSignals';
 
 interface LiveCaptionDisplayProps {
   caption: string;
@@ -19,6 +20,7 @@ export const LiveCaptionDisplay: React.FC<LiveCaptionDisplayProps> = ({
   useEffect(() => {
     if (isActive) {
       setDisplayCaption(caption);
+      if (caption.trim()) emitCommunicationSignal({ kind: 'speech', label: caption, intensity: 0.55 });
     }
   }, [caption, isActive]);
 
@@ -53,7 +55,10 @@ export const LiveCaptionDisplay: React.FC<LiveCaptionDisplayProps> = ({
       aria-atomic="true"
       aria-label="Live captions"
     >
-      {displayCaption}
+      <span className="caption-words" aria-hidden="true">
+        {displayCaption.split(/\s+/).filter(Boolean).map((word, index, words) => <span key={`${word}-${index}`} className={index === words.length - 1 ? 'is-current' : ''}>{word}</span>)}
+      </span>
+      <span className="sr-only">{displayCaption}</span>
     </div>
   );
 };

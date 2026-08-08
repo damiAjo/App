@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import WebSocketService from '../../services/websocket';
+import { Captions, FlaskConical, Mic, PlugZap } from 'lucide-react';
+import WebSocketService from '@/lib/realtime/websocket';
 
 interface LiveCaptioningProps {
   onCaptionUpdate: (caption: string) => void;
@@ -173,7 +174,7 @@ export const LiveCaptioning: React.FC<LiveCaptioningProps> = ({ onCaptionUpdate,
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', fontFamily: 'var(--font-heading)' }}>
-            🎙️ Live Captioning Engine
+            <Captions size={24} aria-hidden="true" style={{ verticalAlign: 'text-bottom', marginRight: '0.5rem' }} /> Live Captioning Engine
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
             Transcribe spoken audio in real-time. Fully customizable overlay settings.
@@ -200,7 +201,7 @@ export const LiveCaptioning: React.FC<LiveCaptioningProps> = ({ onCaptionUpdate,
               }}
               aria-label={`Switch transcription source to ${m}`}
             >
-              {m === 'speech' ? '🎙️ Mic' : m === 'websocket' ? '🔌 Server' : '⚙️ Demo'}
+              {m === 'speech' ? <><Mic size={15} aria-hidden="true" /> Mic</> : m === 'websocket' ? <><PlugZap size={15} aria-hidden="true" /> Server</> : <><FlaskConical size={15} aria-hidden="true" /> Demo</>}
             </button>
           ))}
         </div>

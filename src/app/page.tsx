@@ -2,7 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useAccessibility } from '@/context/AccessibilityContext';
+import { Accessibility, AudioLines, Captions, Contrast, Hand, Lightbulb, MessageCircle, Video } from 'lucide-react';
+import { SignAvatarViewer } from '@/components/avatar';
+import { SiteFooter } from '@/components/layout';
+import { CommunicationStory, MotionPreferenceControl } from '@/components/motion';
+import { HeroImageShowcase } from '@/components/landing';
+import { useAccessibility } from '@/lib/accessibility/AccessibilityContext';
 import {
   CaptioningIllustration,
   VideoCallIllustration,
@@ -13,37 +18,37 @@ import {
 
 const features = [
   {
-    icon: '🎙️',
+    icon: Captions,
     title: 'Live Speech-to-Text',
     desc: 'Leverage Web Speech recognition to transcribe microphone signals instantly with customizable sizes.',
     illustration: 'captioning',
   },
   {
-    icon: '🤟',
+    icon: Hand,
     title: 'Sign Language translation',
     desc: 'Dictate sentences or type texts to generate responsive gestural sequences in real-time.',
     illustration: 'signlanguage',
   },
   {
-    icon: '💬',
+    icon: MessageCircle,
     title: 'AI Conversational Chat',
     desc: 'Interact with our inclusive model using preset chips or dictation inputs.',
     illustration: 'chat',
   },
   {
-    icon: '🚨',
+    icon: AudioLines,
     title: 'Audio & Sound Monitoring',
     desc: 'Web Audio decibel analyzer dynamically alerts you to alarms, doorbell rings, door knockings, and sirens.',
     illustration: 'sounddetection',
   },
   {
-    icon: '📹',
+    icon: Video,
     title: 'Accessible Video Overlays',
     desc: 'Caption overlays and picture-in-picture interpreter windows for video meetings.',
     illustration: 'videocall',
   },
   {
-    icon: '♿',
+    icon: Contrast,
     title: 'WCAG AAA Color Engine',
     desc: 'Toggle standard dark theme, bright light theme, or contrast mode with one click.',
     illustration: 'videocall',
@@ -114,7 +119,7 @@ export default function Home() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <span style={{ fontSize: '1.8rem' }}>♿</span>
+          <Accessibility size={30} strokeWidth={2.2} aria-hidden="true" />
           <span style={{ fontWeight: '800', fontSize: '1.4rem', fontFamily: 'var(--font-heading)', letterSpacing: '-0.5px' }}>
             Access<span style={{ color: 'var(--accent-secondary)' }}>AI</span>
           </span>
@@ -122,6 +127,7 @@ export default function Home() {
 
         {/* Global theme controls */}
         <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+          <MotionPreferenceControl compact />
           <button
             onClick={() => setTheme(theme === 'high-contrast' ? 'dark' : 'high-contrast')}
             aria-pressed={theme === 'high-contrast'}
@@ -136,7 +142,7 @@ export default function Home() {
               cursor: 'pointer',
             }}
           >
-            ♿ High Contrast
+            <Contrast size={16} aria-hidden="true" /> High Contrast
           </button>
           
           <Link
@@ -155,6 +161,8 @@ export default function Home() {
           </Link>
         </div>
       </header>
+
+      <HeroImageShowcase />
 
       {/* Hero Section */}
       <section
@@ -230,7 +238,7 @@ export default function Home() {
             }}
           >
             <div style={{ width: '100%', height: '220px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <CaptioningIllustration />
+              <SignAvatarViewer compact title="Interactive AccessAI avatar preview" />
             </div>
             
             {/* Live Interactive preview bar */}
@@ -247,12 +255,15 @@ export default function Home() {
         </div>
       </section>
 
+      <CommunicationStory />
+
       {/* Main Features Grid */}
       <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '6rem 1rem' }}>
         <section>
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
             <h2 style={{ fontSize: '2.5rem', fontWeight: '800', fontFamily: 'var(--font-heading)', letterSpacing: '-1px' }}>
-              💡 Assistive Features Built to Scalability
+              <Lightbulb size={34} strokeWidth={1.9} aria-hidden="true" style={{ verticalAlign: 'text-bottom', marginRight: '0.65rem', color: 'var(--accent-secondary)' }} />
+              Assistive Features Built to Scale
             </h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginTop: '0.5rem' }}>
               Prioritizing absolute WCAG 2.1 accessibility alongside state-of-the-art designs.
@@ -279,7 +290,9 @@ export default function Home() {
                   minHeight: '220px',
                 }}
               >
-                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{feat.icon}</div>
+                <div className="icon-badge" style={{ marginBottom: '1rem' }}>
+                  <feat.icon size={24} strokeWidth={2} aria-hidden="true" />
+                </div>
                 <div>
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', fontFamily: 'var(--font-heading)', marginBottom: '0.5rem' }}>
                     {feat.title}
@@ -294,25 +307,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer
-        style={{
-          borderTop: '1px solid var(--border-color)',
-          padding: '4rem 1rem 2rem',
-          textAlign: 'center',
-          backgroundColor: 'var(--bg-secondary)',
-        }}
-      >
-        <p style={{ fontWeight: '800', fontSize: '1.1rem', marginBottom: '0.5rem', fontFamily: 'var(--font-heading)' }}>
-          ♿ AccessAI Platform
-        </p>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', maxWidth: '600px', margin: '0 auto 2rem' }}>
-          Delivering fully responsive web platforms strictly compliant with WCAG 2.1 AA and AAA specifications. Built with modern, user-friendly, and accessible interfaces.
-        </p>
-        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block' }}>
-          AccessAI © 2026. Made with pair-programming expertise.
-        </span>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

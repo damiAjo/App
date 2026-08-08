@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { CaptionSettings, getCaptionSettings, saveCaptionSettings } from '../../services/captionSettings';
+import { Settings2 } from 'lucide-react';
+import { CaptionSettings, getCaptionSettings, saveCaptionSettings } from '@/lib/captions/captionSettings';
 
 interface CaptionCustomizerProps {
   onSettingsChange: (settings: CaptionSettings) => void;
@@ -28,7 +29,7 @@ export const CaptionCustomizer: React.FC<CaptionCustomizerProps> = ({ onSettings
       aria-label="Caption customization panel"
     >
       <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', fontFamily: 'var(--font-heading)', marginBottom: '1.5rem' }}>
-        ⚙️ Caption Display Customizer
+        <Settings2 size={24} aria-hidden="true" style={{ verticalAlign: 'text-bottom', marginRight: '0.5rem' }} /> Caption Display Customizer
       </h2>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>

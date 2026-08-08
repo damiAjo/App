@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { AlertTriangle, AudioLines, Hand, MessageCircle, Mic, Octagon } from 'lucide-react';
 
 interface ChatMessage {
   id: string;
@@ -32,10 +33,10 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({ onMessageSend 
 
   // Dynamic quick response helper chips
   const quickChips = [
-    "⚠️ Check emergency status",
-    "🎙️ How do captions work?",
-    "🔊 Activate sound detector",
-    "🤟 Sign translation tips"
+    { label: 'Check emergency status', icon: AlertTriangle },
+    { label: 'How do captions work?', icon: Mic },
+    { label: 'Activate sound detector', icon: AudioLines },
+    { label: 'Sign translation tips', icon: Hand },
   ];
 
   // Map quick responses to smart AI replies
@@ -228,7 +229,7 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({ onMessageSend 
         ))}
         {isLoading && (
           <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
-            <span className="animate-pulse-glow" style={{ fontSize: '1.2rem' }}>💬</span>
+            <MessageCircle className="animate-pulse-glow" size={19} aria-hidden="true" />
             <span>Assistant is typing...</span>
           </div>
         )}
@@ -243,7 +244,7 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({ onMessageSend 
           {quickChips.map((chip, idx) => (
             <button
               key={idx}
-              onClick={() => submitMessage(chip.substring(3))}
+              onClick={() => submitMessage(chip.label)}
               style={{
                 padding: '0.4rem 0.8rem',
                 background: 'var(--bg-tertiary)',
@@ -264,7 +265,7 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({ onMessageSend 
                 e.currentTarget.style.background = 'var(--bg-tertiary)';
               }}
             >
-              {chip}
+              <chip.icon size={14} aria-hidden="true" /> {chip.label}
             </button>
           ))}
         </div>
@@ -292,7 +293,7 @@ export const AIChatAssistant: React.FC<AIChatAssistantProps> = ({ onMessageSend 
                 boxShadow: isDictating ? '0 0 12px var(--danger)' : 'none',
               }}
             >
-              {isDictating ? '🛑' : '🎙️'}
+              {isDictating ? <Octagon size={19} fill="currentColor" aria-hidden="true" /> : <Mic size={19} aria-hidden="true" />}
             </button>
 
             <input

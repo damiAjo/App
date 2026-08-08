@@ -1,11 +1,14 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import type { LucideIcon } from 'lucide-react';
+import { AlarmClock, AudioLines, Baby, Bell, BellRing, DoorOpen, PhoneCall, Siren, Volume2, VolumeX } from 'lucide-react';
+import { emitCommunicationSignal } from '@/lib/signals/communicationSignals';
 
 interface SoundAlert {
   id: string;
   sound: string;
-  icon: string;
+  icon: LucideIcon;
   description: string;
   isDetected: boolean;
   color: string;
@@ -21,12 +24,12 @@ export const EnvironmentalSoundDetection: React.FC<EnvironmentalSoundDetectionPr
   const [isMonitoring, setIsMonitoring] = useState(false);
   const [dbLevel, setDbLevel] = useState(0);
   const [detectedSounds, setDetectedSounds] = useState<SoundAlert[]>([
-    { id: '1', sound: 'doorbell', icon: '🔔', description: 'Doorbell', isDetected: false, color: '#06b6d4' },
-    { id: '2', sound: 'phone', icon: '📱', description: 'Phone Ringing', isDetected: false, color: '#3b82f6' },
-    { id: '3', sound: 'alarm', icon: '⏰', description: 'Safety Alarm', isDetected: false, color: '#f59e0b' },
-    { id: '4', sound: 'knock', icon: '🚪', description: 'Door Knocking', isDetected: false, color: '#10b981' },
-    { id: '5', sound: 'siren', icon: '🚨', description: 'Emergency Siren', isDetected: false, color: '#ef4444' },
-    { id: '6', sound: 'baby-cry', icon: '👶', description: 'Baby Crying', isDetected: false, color: '#ec4899' },
+    { id: '1', sound: 'doorbell', icon: BellRing, description: 'Doorbell', isDetected: false, color: '#06b6d4' },
+    { id: '2', sound: 'phone', icon: PhoneCall, description: 'Phone Ringing', isDetected: false, color: '#3b82f6' },
+    { id: '3', sound: 'alarm', icon: AlarmClock, description: 'Safety Alarm', isDetected: false, color: '#f59e0b' },
+    { id: '4', sound: 'knock', icon: DoorOpen, description: 'Door Knocking', isDetected: false, color: '#10b981' },
+    { id: '5', sound: 'siren', icon: Siren, description: 'Emergency Siren', isDetected: false, color: '#ef4444' },
+    { id: '6', sound: 'baby-cry', icon: Baby, description: 'Baby Crying', isDetected: false, color: '#ec4899' },
   ]);
 
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -148,6 +151,7 @@ export const EnvironmentalSoundDetection: React.FC<EnvironmentalSoundDetectionPr
         );
 
         onSoundDetected?.(randomSound.sound);
+        emitCommunicationSignal({ kind: randomSound.sound === 'siren' || randomSound.sound === 'alarm' ? 'alert' : 'sound', label: randomSound.description, intensity: 0.9 });
 
         // Haptic pulse feedback
         if (typeof navigator !== 'undefined' && navigator.vibrate) {
@@ -189,7 +193,7 @@ export const EnvironmentalSoundDetection: React.FC<EnvironmentalSoundDetectionPr
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', fontFamily: 'var(--font-heading)' }}>
-            🔊 Environmental Sound Detection
+            <AudioLines size={24} aria-hidden="true" style={{ verticalAlign: 'text-bottom', marginRight: '0.5rem' }} /> Environmental Sound Detection
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
             Listens for environmental sound waves and signals critical events.
@@ -237,7 +241,7 @@ export const EnvironmentalSoundDetection: React.FC<EnvironmentalSoundDetectionPr
             {dbLevel}<span style={{ fontSize: '1rem', fontWeight: '500' }}>dB</span>
           </div>
           <span style={{ fontSize: '0.75rem', fontWeight: '600', color: dbLevel > 60 ? 'var(--danger)' : 'var(--success)' }}>
-            {dbLevel > 60 ? '🚨 LOUD' : isMonitoring ? '🔊 ACTIVE' : '🤫 MUTED'}
+            {dbLevel > 60 ? <><Siren size={14} aria-hidden="true" /> LOUD</> : isMonitoring ? <><Volume2 size={14} aria-hidden="true" /> ACTIVE</> : <><VolumeX size={14} aria-hidden="true" /> MUTED</>}
           </span>
         </div>
 
@@ -294,7 +298,7 @@ export const EnvironmentalSoundDetection: React.FC<EnvironmentalSoundDetectionPr
             role="status"
             aria-live="polite"
           >
-            <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem', transform: sound.isDetected ? 'scale(1.2) rotate(10deg)' : 'scale(1)', transition: 'transform 0.2s ease' }}>{sound.icon}</div>
+            <div style={{ marginBottom: '0.5rem', transform: sound.isDetected ? 'scale(1.2) rotate(10deg)' : 'scale(1)', transition: 'transform 0.2s ease' }}><sound.icon size={38} strokeWidth={1.8} aria-hidden="true" /></div>
             <div style={{ fontSize: '0.85rem', fontWeight: 'bold' }}>{sound.description}</div>
             
             <div style={{
@@ -304,7 +308,7 @@ export const EnvironmentalSoundDetection: React.FC<EnvironmentalSoundDetectionPr
               color: sound.color,
               opacity: sound.isDetected ? 1 : 0.4,
             }}>
-              {sound.isDetected ? '🔔 DETECTED!' : 'LISTENING'}
+              {sound.isDetected ? <><Bell size={13} aria-hidden="true" /> DETECTED!</> : 'LISTENING'}
             </div>
           </div>
         ))}

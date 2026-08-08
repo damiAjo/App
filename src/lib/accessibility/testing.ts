@@ -1,4 +1,4 @@
-// Accessibility testing utilities using Axe and Lighthouse
+// Accessibility testing utilities using axe-core
 export const runAccessibilityTests = async () => {
   if (typeof window === 'undefined') return null;
 

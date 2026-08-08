@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { CameraOff, Hand, Languages, LoaderCircle } from 'lucide-react';
+import { SignAvatarViewer } from '@/components/avatar';
 
 interface SignLanguageTranslatorProps {
   onTranslate?: (text: string) => void;
@@ -15,41 +17,20 @@ export const SignLanguageTranslator: React.FC<SignLanguageTranslatorProps> = ({ 
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
-  // Gesture mapping dictionary for demonstrative sign translation representation
-  const gestureDict: Record<string, string> = {
-    hello: '👋',
-    welcome: '👐',
-    please: '🙏',
-    thanks: '🤝',
-    thank: '🤝',
-    you: '☝️',
-    love: '🤟',
-    help: '✊',
-    safety: '🛡️',
-    emergency: '🚨',
-    yes: '👍',
-    no: '👎',
-    deaf: '👂🚫',
-    happy: '😊',
-    good: '👌',
-  };
-
   const handleTranslate = async () => {
     if (!translationText.trim()) return;
     setIsProcessing(true);
     setMappedGestures([]);
 
-    // Translate words into gestural characters
+    // Prepare a word sequence for the 3D motion layer.
     setTimeout(() => {
       const words = translationText.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "").split(/\s+/);
-      const gestures = words
-        .map(word => gestureDict[word] || '✍️') // Default to writing hand icon if not in dictionary
-        .filter(Boolean);
+      const gestures = words.filter(Boolean);
 
       setMappedGestures(gestures);
       setIsProcessing(false);
       onTranslate?.(translationText);
-    }, 8500); // Simulate realistic deep-learning translation latency
+    }, 650);
   };
 
   const stopVideoCapture = () => {
@@ -102,10 +83,10 @@ export const SignLanguageTranslator: React.FC<SignLanguageTranslatorProps> = ({ 
       aria-label="Sign language translation interface"
     >
       <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', fontFamily: 'var(--font-heading)', marginBottom: '1.5rem' }}>
-        🤟 Sign Language Translator (Avatar Vision)
+        <Languages size={24} aria-hidden="true" style={{ verticalAlign: 'text-bottom', marginRight: '0.5rem' }} /> Sign Language Translator (Avatar Vision)
       </h2>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', flexWrap: 'wrap' }}>
+      <div className="translator-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 0.8fr) minmax(0, 1.2fr)', gap: '2rem' }}>
         
         {/* Input Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -190,7 +171,7 @@ export const SignLanguageTranslator: React.FC<SignLanguageTranslatorProps> = ({ 
             />
             {!isCameraActive && (
               <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.6)' }}>
-                <span style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📷</span>
+                <CameraOff size={32} aria-hidden="true" style={{ marginBottom: '0.5rem' }} />
                 <span style={{ fontSize: '0.85rem', color: '#aaa', fontWeight: '500' }}>Webcam feedback closed</span>
               </div>
             )}
@@ -200,8 +181,10 @@ export const SignLanguageTranslator: React.FC<SignLanguageTranslatorProps> = ({ 
         {/* Translation Output Column */}
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '100%' }}>
           <span style={{ display: 'block', fontWeight: '600', marginBottom: '0.5rem', fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
-            Sign Language Gestural Output
+            Interactive 3D Avatar Output
           </span>
+
+          <SignAvatarViewer words={mappedGestures.length > 0 ? mappedGestures : ['hello', 'welcome']} />
 
           <div
             style={{
@@ -222,7 +205,7 @@ export const SignLanguageTranslator: React.FC<SignLanguageTranslatorProps> = ({ 
           >
             {isProcessing ? (
               <div style={{ textAlign: 'center' }}>
-                <div className="animate-pulse-glow" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>🤟</div>
+                <LoaderCircle className="animate-pulse-glow" size={40} aria-hidden="true" style={{ margin: '0 auto 0.5rem' }} />
                 <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: '500' }}>AI is mapping sentences into sign sequence...</div>
               </div>
             ) : mappedGestures.length > 0 ? (
@@ -243,7 +226,7 @@ export const SignLanguageTranslator: React.FC<SignLanguageTranslatorProps> = ({ 
                       minWidth: '70px',
                     }}
                   >
-                    <span style={{ fontSize: '2.2rem', marginBottom: '0.25rem' }}>{gesture}</span>
+                    <span style={{ fontSize: '0.85rem', marginBottom: '0.25rem', fontWeight: '700', color: 'var(--text-primary)' }}>{gesture}</span>
                     <span style={{ fontSize: '0.7rem', color: 'var(--accent-secondary)', fontWeight: 'bold', textTransform: 'uppercase' }}>
                       {translationText.split(/\s+/)[i] || ''}
                     </span>
@@ -252,7 +235,7 @@ export const SignLanguageTranslator: React.FC<SignLanguageTranslatorProps> = ({ 
               </div>
             ) : (
               <div style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>
-                <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '0.5rem' }}>👐</span>
+                <Hand size={40} aria-hidden="true" style={{ display: 'block', margin: '0 auto 0.5rem' }} />
                 <span>Enter text and click "Translate" to see sign gestures.</span>
               </div>
             )}

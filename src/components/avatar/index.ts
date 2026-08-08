@@ -1,0 +1,1 @@
+export { SignAvatarViewer } from './SignAvatarViewer';
