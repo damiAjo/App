@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Accessibility, AudioLines, Captions, Contrast, Hand, Lightbulb, MessageCircle, Video } from 'lucide-react';
 import { SignAvatarViewer } from '@/components/avatar';
-import { SiteFooter } from '@/components/layout';
+import { AdaptiveBackground, SiteFooter } from '@/components/layout';
 import { CommunicationStory, MotionPreferenceControl } from '@/components/motion';
 import { HeroImageShowcase } from '@/components/landing';
 import { useAccessibility } from '@/lib/accessibility/AccessibilityContext';
@@ -74,33 +74,8 @@ export default function Home() {
   if (!mounted) return null;
 
   return (
-    <div style={{ minHeight: '100vh', background: 'transparent', color: 'var(--text-primary)' }}>
-      {/* Decorative Blur Orbs for visual wow factor */}
-      {/* Gradient orbs — boost local depth on top of the body aurora mesh */}
-      <div style={{
-        position: 'fixed',
-        top: '5%',
-        left: '-5%',
-        width: '480px',
-        height: '480px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(124, 58, 237, 0.22) 0%, transparent 70%)',
-        filter: 'blur(60px)',
-        zIndex: 0,
-        pointerEvents: 'none',
-      }} />
-      <div style={{
-        position: 'fixed',
-        top: '40%',
-        right: '-8%',
-        width: '560px',
-        height: '560px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(136, 212, 43, 0.14) 0%, transparent 70%)',
-        filter: 'blur(70px)',
-        zIndex: 0,
-        pointerEvents: 'none',
-      }} />
+    <div className="app-shell app-shell--landing">
+      <AdaptiveBackground variant="cinematic" accent="violet" />
 
       {/* Landing Header */}
       <header

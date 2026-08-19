@@ -14,7 +14,7 @@ import {
   AccessibleVideoOverlay,
 } from '@/components/ai';
 import { CaptionSettings, DEFAULT_CAPTION_SETTINGS } from '@/lib/captions/captionSettings';
-import { SiteFooter } from '@/components/layout';
+import { AdaptiveBackground, SiteFooter } from '@/components/layout';
 import { MotionPreferenceControl } from '@/components/motion';
 
 export default function Dashboard() {
@@ -24,17 +24,11 @@ export default function Dashboard() {
   const [captionSettings, setCaptionSettings] = useState<CaptionSettings>(DEFAULT_CAPTION_SETTINGS);
   const [activeTab, setActiveTab] = useState('overview');
 
+  const activeAccent = activeTab === 'alerts' ? 'red' : activeTab === 'captioning' ? 'lime' : activeTab === 'video' ? 'cyan' : 'violet';
+
   return (
-    <div
-      style={{
-        background: 'transparent',
-        color: 'var(--text-primary)',
-        minHeight: '100vh',
-        padding: '2rem 1.5rem',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
+    <div className="app-shell app-shell--workspace">
+      <AdaptiveBackground variant={activeTab === 'overview' ? 'workspace' : 'focus'} accent={activeAccent} />
       {/* Top Header Section */}
       <header
         className="glass-panel animate-slide-up"

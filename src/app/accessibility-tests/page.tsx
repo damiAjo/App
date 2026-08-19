@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AlertTriangle, CheckCircle2, Ear, Keyboard, Microscope, Printer, ScanSearch, ShieldCheck } from 'lucide-react';
 import { runAccessibilityTests, generateAccessibilityReport } from '@/lib/accessibility/testing';
-import { SiteFooter } from '@/components/layout';
+import { AdaptiveBackground, SiteFooter } from '@/components/layout';
 
 export default function AccessibilityTestPage() {
   const [report, setReport] = useState<any>(null);
@@ -44,7 +44,8 @@ export default function AccessibilityTestPage() {
   if (!mounted) return null;
 
   return (
-    <div style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)', minHeight: '100vh', padding: '3rem 1.5rem' }}>
+    <div className="app-shell app-shell--focus">
+      <AdaptiveBackground variant="focus" accent="cyan" />
       <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
         
         {/* Navigation back to dashboard */}

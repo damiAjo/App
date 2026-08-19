@@ -10,54 +10,41 @@
 
   /* ── Semantic Tokens ──────────────────────────────────────── */
   --bg-primary:     transparent;          /* Body gradient shows through */
-  --bg-base:        #0d0520;              /* Deepest background fallback  */
-  --bg-secondary:   rgba(255,255,255,0.06);
-  --bg-tertiary:    rgba(255,255,255,0.04);
-  --border-color:   rgba(255,255,255,0.10);
-  --text-primary:   #f0fdf4;
-  --text-secondary: #a7f3d0;
+  --bg-base:        #080a10;
+  --bg-secondary:   rgba(17,21,31,0.82);
+  --bg-tertiary:    rgba(255,255,255,0.035);
+  --border-color:   rgba(255,255,255,0.09);
+  --text-primary:   #f4f6f8;
+  --text-secondary: #aab2c0;
   --accent-primary:   var(--purple-vivid);
   --accent-secondary: var(--lime);
   --accent-gradient: linear-gradient(135deg, #5b1d9e 0%, #7c3aed 45%, #88d42b 100%);
   --success: #4ade80;
   --warning: #f59e0b;
   --danger:  #ef4444;
-  --shadow:  0 8px 32px 0 rgba(91, 29, 158, 0.35);
+  --shadow:  0 20px 60px rgba(0,0,0,0.28);
   --font-sans:    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-heading: ui-rounded, "Arial Rounded MT Bold", var(--font-sans);
   --focus-ring:   3px solid var(--lime);
 
-  /* ── Aurora Mesh Gradient (default dark) ─────────────────── */
-  /*    Five radial blobs over a deep purple-black base          */
-  --bg-gradient:
-    radial-gradient(ellipse 70% 55% at 8%  25%, rgba(91,  29, 158, 0.60) 0%, transparent 65%),
-    radial-gradient(ellipse 60% 50% at 92% 8%,  rgba(136,212, 43,  0.28) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 60% at 78% 82%, rgba(124, 58, 237, 0.45) 0%, transparent 60%),
-    radial-gradient(ellipse 45% 45% at 22% 88%, rgba(136,212, 43,  0.16) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 40% at 55% 45%, rgba(192,132, 252, 0.18) 0%, transparent 50%),
-    linear-gradient(160deg, #0d0520 0%, #1a0a2e 28%, #0b1a04 58%, #0d0520 100%);
+  --bg-gradient: #080a10;
 }
 
 /* ── Light Theme ──────────────────────────────────────────────── */
 .theme-light {
-  --bg-secondary:   rgba(255,255,255,0.55);
-  --bg-tertiary:    rgba(255,255,255,0.35);
+  --bg-base:        #eef1f5;
+  --bg-secondary:   rgba(255,255,255,0.78);
+  --bg-tertiary:    rgba(255,255,255,0.48);
   --border-color:   rgba(91, 29, 158, 0.15);
   --text-primary:   #1a0533;
-  --text-secondary: #4a1487;
+  --text-secondary: #4d5665;
   --accent-primary:   #7c3aed;
   --accent-secondary: #88d42b;
   --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #c084fc 60%, #88d42b 100%);
   --shadow: 0 8px 32px 0 rgba(124, 58, 237, 0.18);
   --focus-ring: 3px solid #7c3aed;
 
-  --bg-gradient:
-    radial-gradient(ellipse 65% 55% at 8%  20%, rgba(168,230, 61,  0.55) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 50% at 90% 10%, rgba(124, 58, 237, 0.30) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 55% at 75% 85%, rgba(192,132, 252, 0.40) 0%, transparent 58%),
-    radial-gradient(ellipse 40% 40% at 20% 85%, rgba(136,212, 43,  0.25) 0%, transparent 50%),
-    radial-gradient(ellipse 35% 35% at 52% 48%, rgba(124, 58, 237, 0.15) 0%, transparent 48%),
-    linear-gradient(155deg, #f0fff4 0%, #e9d5ff 35%, #d9f99d 65%, #f5f3ff 100%);
+  --bg-gradient: #eef1f5;
 }
 
 /* ── High Contrast Theme (WCAG AAA) ──────────────────────────── */
@@ -103,10 +90,107 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* ── The professional multi-layer gradient ── */
   background: var(--bg-gradient);
-  background-attachment: fixed;   /* Parallax feel while scrolling */
   background-color: var(--bg-base);
+}
+
+.app-shell {
+  position: relative;
+  z-index: 0;
+  min-height: 100vh;
+  color: var(--text-primary);
+  isolation: isolate;
+}
+
+.app-shell--workspace {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+}
+
+.app-shell--focus { padding: 3rem 1.5rem; }
+
+.adaptive-bg {
+  --signal-rgb: 124, 58, 237;
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% -20%, rgba(var(--signal-rgb), 0.11), transparent 42%), linear-gradient(180deg, #0b0e15 0%, #080a10 52%, #090b11 100%);
+}
+
+.adaptive-bg--lime { --signal-rgb: 136, 212, 43; }
+.adaptive-bg--cyan { --signal-rgb: 6, 182, 212; }
+.adaptive-bg--violet { --signal-rgb: 124, 58, 237; }
+.adaptive-bg--red { --signal-rgb: 239, 68, 68; }
+
+.adaptive-bg__grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, black, transparent 88%);
+}
+
+.adaptive-bg--cinematic .adaptive-bg__grid {
+  transform: perspective(700px) rotateX(58deg) scale(1.5) translateY(16%);
+  transform-origin: center bottom;
+  opacity: 0.26;
+}
+
+.adaptive-bg__beam {
+  position: absolute;
+  width: 54vw;
+  height: 120vh;
+  top: -36vh;
+  left: 25%;
+  background: linear-gradient(110deg, transparent 37%, rgba(var(--signal-rgb), 0.08) 49%, transparent 61%);
+  filter: blur(18px);
+  animation: signalBeam 18s ease-in-out infinite alternate;
+}
+
+.adaptive-bg__signal { position: absolute; border-radius: 50%; }
+.adaptive-bg__signal--primary {
+  width: min(58vw, 760px);
+  aspect-ratio: 1;
+  top: -26%;
+  right: -14%;
+  background: radial-gradient(circle, rgba(var(--signal-rgb), 0.14), rgba(var(--signal-rgb), 0.035) 42%, transparent 68%);
+}
+.adaptive-bg__signal--secondary {
+  width: min(38vw, 520px);
+  aspect-ratio: 1;
+  left: -12%;
+  bottom: -18%;
+  background: radial-gradient(circle, rgba(136,212,43,0.065), transparent 66%);
+}
+
+.adaptive-bg--focus .adaptive-bg__grid { opacity: 0.1; background-size: 96px 96px; }
+.adaptive-bg--focus .adaptive-bg__signal--primary { top: 12%; right: 8%; opacity: 0.72; }
+
+.adaptive-bg__grain {
+  position: absolute;
+  inset: -50%;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+  transform: rotate(8deg);
+}
+
+.theme-light .adaptive-bg { background: radial-gradient(circle at 50% -15%, rgba(var(--signal-rgb), 0.11), transparent 42%), linear-gradient(180deg, #f7f8fa 0%, #edf0f4 100%); }
+.theme-light .adaptive-bg__grid {
+  background-image: linear-gradient(rgba(26,5,51,0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(26,5,51,0.055) 1px, transparent 1px);
+}
+.theme-high-contrast .adaptive-bg { background: #000; }
+.theme-high-contrast .adaptive-bg__grid,
+.theme-high-contrast .adaptive-bg__beam,
+.theme-high-contrast .adaptive-bg__signal,
+.theme-high-contrast .adaptive-bg__grain { display: none; }
+
+@keyframes signalBeam {
+  from { transform: rotate(-12deg) translateX(-3%); opacity: 0.3; }
+  to { transform: rotate(-9deg) translateX(5%); opacity: 0.55; }
 }
 
 /* Scrollbar track should be semi-transparent so gradient shows */
@@ -125,8 +209,8 @@ body.user-is-tabbing *:focus {
    aurora gradient beneath glows through the panel edges.        */
 .glass-panel {
   background: var(--bg-secondary);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(125%);
+  -webkit-backdrop-filter: blur(20px) saturate(125%);
   border: 1px solid var(--border-color);
   border-radius: 16px;
   box-shadow: var(--shadow);
@@ -134,8 +218,8 @@ body.user-is-tabbing *:focus {
 
 .glass-card {
   background: var(--bg-tertiary);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1.5rem;
@@ -879,6 +963,21 @@ body.user-is-tabbing *:focus {
 @keyframes captionWordIn { from { opacity: 0; transform: translateY(0.35em); filter: blur(3px); } to { opacity: 1; transform: none; filter: none; } }
 
 @media (max-width: 760px) {
+  .app-shell--workspace,
+  .app-shell--focus {
+    padding: 1rem;
+  }
+
+  .adaptive-bg__grid {
+    background-size: 48px 48px;
+    opacity: 0.12;
+  }
+
+  .adaptive-bg__beam,
+  .adaptive-bg__signal--secondary {
+    display: none;
+  }
+
   .hero-showcase {
     height: 650px;
     min-height: 650px;
@@ -973,6 +1072,7 @@ body.user-is-tabbing *:focus {
 .motion-reduced .story-orbit,
 .motion-reduced .story-wave i { animation: none; }
 .motion-reduced .story-card { animation: pulseGlow 0.35s ease; }
+.motion-reduced .adaptive-bg__beam { animation: none; }
 .motion-reduced .hero-showcase__image { animation: none; transform: scale(1.02); }
 .motion-reduced .hero-float { animation: none; }
 .motion-reduced .hero-showcase__scan { display: none; }
@@ -990,6 +1090,8 @@ body.user-is-tabbing *:focus {
 .motion-none .communication-story__tabs button.is-active {
   transform: none;
 }
+
+.motion-none .adaptive-bg__beam { display: none; }
 
 button svg,
 a svg {
